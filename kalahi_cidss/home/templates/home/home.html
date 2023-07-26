@@ -1,11 +1,16 @@
 <!-- home.html -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Kalahi-CIDSS | Homepage</title>
-</head>
-<body>
-    <h1>Kalahi-CIDSS | DSWD RO XI</h1>
-    <!-- Add your content here -->
-</body>
-</html>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Kalahi-CIDSS | Home{% endblock %}
+
+{% block content %}
+    <div class="hero-image-container">
+        <img src="{% static 'images/davao_skyline.png' %}" alt="Davao Skyline">
+        <div class="hero-text-container">
+            <h1>KALAHI-CIDSS</h1>
+            <h2>Regional Data Analysis and Reporting</h2>
+        </div>
+    </div>
+{% endblock %}
+

@@ -1,0 +1,31 @@
+<!-- base.html -->
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+</head>
+<nav>
+    <div>
+        <a href="https://kalahi.dswd.gov.ph/">
+            <img class="logo" src="{% static 'images/kalahi_cidss_logo.png' %}" alt="KALAHI-CIDSS Logo">
+        </a> 
+    </div>
+    <div class="nav-separator"></div>
+    <div>
+        <ul>
+            <li class="nav-item {% if active_page == '' %}active{% endif %}"><a href="{% url 'home:home' %}">Home</a></li>
+            <li><a href="{% url 'home:home' %}">Dashboard</a></li>
+            <li><a href="{% url 'home:home' %}">Tables</a></li>
+            <li><a href="{% url 'home:home' %}">About</a></li>
+        </ul>  
+    </div>
+</nav>
+{% block content %}{% endblock %}
+<footer>
+    <div class="footer-separator"></div>
+    <p>&copy; 2023 DSWD FO XI</p>
+</footer>
+</html>
