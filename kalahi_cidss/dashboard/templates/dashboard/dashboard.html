@@ -11,6 +11,7 @@
 <div id="projects-graph" ></div>
 <div id="fp-graph"></div>
 <div id="cr-graph"></div>
+<div id="fs-graph"></div>
 
     <script>
         var projects = JSON.parse('{{ projects_graph_json|safe }}');
@@ -21,6 +22,9 @@
 
         var completion_rate = JSON.parse('{{ cr_graph_json|safe }}');
         Plotly.newPlot('cr-graph', completion_rate.data, completion_rate.layout);
+
+        var fund_source = JSON.parse('{{ fs_graph_json|safe }}');
+        Plotly.newPlot('fs-graph', fund_source.data, fund_source.layout);
     </script>
     
 </body>

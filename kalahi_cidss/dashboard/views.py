@@ -1,9 +1,12 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 import plotly.graph_objects as go
+import plotly.express as px
+import plotly 
 import pandas as pd
 import numpy as np
 import os
+import json
 from django.conf import settings
 
 
@@ -55,4 +58,11 @@ def access_data(request):
     # Convert the Plotly figure to JSON to pass it to the template
     cr_graph_json = cr.to_json()
 
-    return render(request, 'dashboard/dashboard.html', {'projects_graph_json': projects_graph_json,  'fp_graph_json': fp_graph_json, "cr_graph_json" : cr_graph_json})
+    #PROJECTS BY FUND SOURCE
+
+    fund_source = px.histogram(sheet_data, x="Fund_Source", title="Projects by Fund Source")
+    # Convert the Plotly figure to JSON to pass it to the template
+    fs__graph_json = json.dumps(fund_source, cls=plotly.utils.PlotlyJSONEncoder)
+
+    return render(request, 'dashboard/dashboard.html', {'projects_graph_json': projects_graph_json,
+                                                          'fp_graph_json': fp_graph_json, "cr_graph_json" : cr_graph_json, "fs_graph_json": fs__graph_json})
