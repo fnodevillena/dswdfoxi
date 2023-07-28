@@ -2,4 +2,5 @@ from django.shortcuts import render
 from django.http import HttpResponse
 
 def home(request):
-    return render(request, "home/home.html", {'active_page': home})
+    context = {'active_page': 'home'}
+    return render(request, "home/home.html", context)
