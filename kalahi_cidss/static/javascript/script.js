@@ -15,7 +15,7 @@ function checkOrientation() {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-    document.body.style.fontSize = isMobileDevice() ? '1px' : '16px';
+    document.body.style.fontSize = isMobileDevice() ? '12px' : '16px';
 });
 
 /*

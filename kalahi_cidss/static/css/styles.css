@@ -23,7 +23,7 @@ nav {
 }
 
 nav img {
-    max-width: 150px;
+    max-width: 125px;
     height: auto;
     float: left;
     display: block;
@@ -79,6 +79,7 @@ nav a {
     padding: 25px 15px;
     color: #fff;
     font-family: 'Helvetica Neue', sans-serif;
+    font-size: 1rem;
     text-align: center;
     text-decoration: none;
 }
@@ -89,6 +90,7 @@ footer {
     color: #fff;
     text-align: left;
     font-family: 'Helvetica Neue', sans-serif;
+    font-size: 0.75rem;
     padding: 15px 15px;
     text-decoration: none;
 }
