@@ -5,26 +5,23 @@
 {% block title %}Kalahi-CIDSS | Home{% endblock %}
 
 {% block content %}
-<article class="home">
-    <h1>About</h1>
-    <p>
-        Kalahi-CIDSS, otherwise known as the Kapit-Bisig Laban sa Kahirapan-Comprehensive and Integrated Delivery of
-        Social Services, is one of the poverty alleviation programs of the Philippine Government being implemented by
-        the Department of Social Welfare and Development (DSWD). It uses the community-driven development (CDD)
-        approach, a globally recognized strategy for achieving service delivery, poverty reduction, and good governance
-        outcomes.
-    </p>
-    <p>
-        &#8226; Helps communities in poor municipalities identify challenges around reducing poverty and make informed
-        decisions on a range of locally identified options for development, including how this is made and in what form;
-    </p>
-    <p>
-        &#8226; Gives control of resources to address local poverty to communities; and
-    </p>
-    <p>
-        &#8226; Builds the capacity of both state (including local governments) and civil society stakeholders to
-        provide assistance and respond to calls for support from poor communities as they implement development
-        initiatives.
-    </p>
-</article>
+<!-- Include the Plotly library -->
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<body>
+<div id="projects-graph" ></div>
+<div id="fp-graph"></div>
+<div id="cr-graph"></div>
+
+    <script>
+        var projects = JSON.parse('{{ projects_graph_json|safe }}');
+        Plotly.newPlot('projects-graph', projects.data, projects.layout);
+
+        var finished_projects = JSON.parse('{{ fp_graph_json|safe }}');
+        Plotly.newPlot('fp-graph', finished_projects.data, finished_projects.layout);
+
+        var completion_rate = JSON.parse('{{ cr_graph_json|safe }}');
+        Plotly.newPlot('cr-graph', completion_rate.data, completion_rate.layout);
+    </script>
+    
+</body>
 {% endblock %}
