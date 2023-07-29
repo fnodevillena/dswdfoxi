@@ -11,12 +11,9 @@
 
 <body>
     <div class="container">
-        <!---->
-
-        <nav id="navbar">
-            <img id="desktop-logo" src="{% static 'images/dswd_logo.png' %}" alt="KALAHI-CIDSS Logo">
-
-            <div class="navbar-divider" id="navbar-divider-desktop"></div>
+        <nav>
+            <img src="{% static 'images/dswd_logo.png' %}" alt="KALAHI-CIDSS Logo">
+            <div class="navbar-divider"></div>
             <div>
                 <ul>
                     <li {% if active_page == 'home' %}class='active'{% endif %}>
@@ -30,27 +27,23 @@
                 </ul>
             </div>
         </nav>
-
-
-
-
-
-        <!--
-    <div id="mobile-navbar">
-    <nav class="navbar-mobile">
-        <div>
-            <img class="logo" src="{% static 'images/kalahi_cidss_logo.png' %}" alt="KALAHI-CIDSS Logo" onclick="toggleSidebar()">
-        </div>
-
-
-        <div id="mobile-sidebar">
-            <aside>
-
-            </aside>
-        </div>
-
-    </nav>
-    -->
+        <aside>
+            <div class="sidebar-divider"></div>
+            <div>
+                <ul>
+                    <li {% if active_page == 'home' %}class='active'{% endif %}>
+                        <a href="{% url 'home:home' %}">Home</a>
+                    </li>
+                    <li {% if active_page == 'dashboard' %}class='active'{% endif %}">
+                        <a href="{% url 'dashboard:dashboard' %}">Dashboard</a>
+                    </li>
+                    <li><a href="{% url 'home:home' %}">Tables</a></li>
+                    <li><a href="{% url 'home:home' %}">About</a></li>
+                </ul>
+            </div>
+        
+        </aside>
+        <div class="overlay"></div>
 
         {% block content %}{% endblock %}
 

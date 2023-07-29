@@ -13,22 +13,23 @@ nav {
     position: fixed;
     top: 0;
     left: 0;
-    background: linear-gradient(90deg, #3b32a5, #00c652);
+    background: linear-gradient(90deg, #3b32a5, #3b32a5, #00c652);
     display: flex;
     align-items: center;
     padding: 10px;
     width: 100%;
     height: 50px;
-    z-index: 100;
+    z-index: 99;
 }
 
 nav img {
-    max-width: 125px;
+    width: 150px;
     height: auto;
     float: left;
     display: block;
     margin: 0;
     margin-right: 5px;
+    z-index: 100;
 }
 
 nav .navbar-divider {
@@ -36,6 +37,7 @@ nav .navbar-divider {
     height: 50px;
     background-color: #756fc0;
     margin: 0 10px;
+    display: block;
 }
 
 nav ul {
@@ -46,6 +48,7 @@ nav ul {
     overflow: hidden;
     margin: 0;
     padding: 0;
+    display: block;
 }
 
 nav li {
@@ -84,9 +87,93 @@ nav a {
     text-decoration: none;
 }
 
+/* Side Bar */
+
+aside {
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 10px;
+    background: #3b32a5;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 50%;
+    height: 100%;
+    z-index: 98;
+    transform: translateX(-100%); /* Start the sidebar offscreen */
+    transition: transform 0.3s ease;
+  }
+  
+  aside.active {
+    transform: translateX(0); /* Slide the sidebar into view when the 'active' class is added */
+  }
+
+.overlay {
+    position: fixed; /* Sit on top of the page content */
+    display: none; /* Hidden by default */
+    width: 100%; /* Full width (cover the whole page) */
+    height: 100%; /* Full height (cover the whole page) */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.7); /* Black background with opacity */
+    z-index: 97; /* Specify a stack order in case you're using a different order for other elements */
+    cursor: pointer; /* Add a pointer on hover */
+}
+
+aside .sidebar-divider {
+    width: 150px;
+    height: 2.5px;
+    background-color: #756fc0;
+    margin-top: 75px;
+    bottom: 0;
+    margin-left: -10px;
+}
+
+aside ul {
+    position: fixed;
+    left: 0;
+    height: 100%;
+    list-style-type: none;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    display: block;
+}
+
+aside li {
+    display: flex;
+    float: left;
+    width: 100%;
+    align-items: center;
+    padding: 0;
+    margin: auto;
+    margin-right: 0;
+}
+    
+aside li:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+aside li.active {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+aside a {
+    display: block;
+    padding: 25px 15px;
+    color: #fff;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 1.2rem;
+    text-align: center;
+    text-decoration: none;
+}
+
 /* Footer */
 footer {
-    background: linear-gradient(135deg, #3b32a5, #00c652);
+    background: linear-gradient(90deg, #3b32a5, #3b32a5, #00c652);
     color: #fff;
     text-align: left;
     font-family: 'Helvetica Neue', sans-serif;
@@ -181,7 +268,3 @@ article.home h1 {
     border-bottom: 1.75px solid #342c91;
 }
 
-/* Media Query for Parallax Effect */
-@media (min-width: 768px) {}
-
-@media (max-width: 767px) {}
