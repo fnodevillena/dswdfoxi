@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.http import HttpResponse
 import plotly.graph_objects as go
@@ -9,7 +10,7 @@ import os
 import json
 from django.conf import settings
 
-
+@login_required
 def dashboard(request):
     context = {'active_page': 'dashboard'}
     

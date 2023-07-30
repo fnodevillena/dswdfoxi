@@ -1,0 +1,45 @@
+<!-- login.html -->
+
+<!DOCTYPE html>
+{% load static %}
+<html>
+
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
+</head>
+
+<body>
+    <div class="background-container">
+        <div class="content">
+            <div class="login-container"> <!-- Container for logo and login form -->
+                <div class="logo-container">
+                    <div class="logo">
+                        <img src="{% static 'images/kalahi_cidss_ncddp.png' %}" alt="Logo">
+                    </div>
+                </div>
+                <div class="login-form">
+                    {% if messages %}
+                    <ul class="messages">
+                        {% for message in messages %}
+                        <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                            {% endfor %}
+                    </ul>
+                    {% endif %}
+                    <form method="post" action="{% url 'account:login' %}">
+                        {% csrf_token %}
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" required>
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" required>
+                        <button type="submit">Login</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="overlay"></div>
+    </div>
+    <script src="{% static 'javascript/login.js' %}"></script>
+</body>
+
+</html>

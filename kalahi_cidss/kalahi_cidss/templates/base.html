@@ -1,0 +1,56 @@
+<!-- base.html -->
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
+</head>
+
+<body>
+    <div class="container">
+        <nav>
+            <img class="logo" src="{% static 'images/base/dswd_logo.png' %}" alt="KALAHI-CIDSS Logo">
+            <div class="navbar-divider"></div>
+            <div>
+                <ul>
+                    <li {% if active_page == 'home' %}class='active'{% endif %}>
+                        <a href="{% url 'home:home' %}">Home</a>
+                    </li>
+                    <li {% if active_page == 'dashboard' %}class='active'{% endif %}">
+                        <a href="{% url 'dashboard:dashboard' %}">Dashboard</a>
+                    </li>
+                    <li><a href="{% url 'home:home' %}">Tables</a></li>
+                </ul>
+            </div>
+        </nav>
+        <aside>
+            <div class="sidebar-divider"></div>
+            <div>
+                <ul>
+                    <li {% if active_page == 'home' %}class='active'{% endif %}>
+                        <a href="{% url 'home:home' %}">Home</a>
+                    </li>
+                    <li {% if active_page == 'dashboard' %}class='active'{% endif %}">
+                        <a href="{% url 'dashboard:dashboard' %}">Dashboard</a>
+                    </li>
+                    <li><a href="{% url 'home:home' %}">Tables</a></li>
+                </ul>
+            </div>
+        
+        </aside>
+        <div class="overlay"></div>
+
+        {% block content %}{% endblock %}
+
+        <footer>
+            <div class="footer-separator"></div>
+            <p>&copy; 2023 DSWD FO XI</p>
+        </footer>
+    </div>
+</body>
+<script src="{% static 'javascript/base.js' %}"></script>
+
+</html>
