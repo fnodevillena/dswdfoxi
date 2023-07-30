@@ -12,6 +12,9 @@
 <div id="fp-graph"></div>
 <div id="cr-graph"></div>
 <div id="fs-graph"></div>
+<div id="prov-graph"></div>
+<div id="catproj-graph"></div>
+<div id="projtrend-graph"></div>
 
     <script>
         var projects = JSON.parse('{{ projects_graph_json|safe }}');
@@ -25,6 +28,15 @@
 
         var fund_source = JSON.parse('{{ fs_graph_json|safe }}');
         Plotly.newPlot('fs-graph', fund_source.data, fund_source.layout);
+
+        var province_proj = JSON.parse('{{ prov_graph_json|safe }}');
+        Plotly.newPlot('prov-graph', province_proj.data, province_proj.layout);
+
+        var cat_proj = JSON.parse('{{ cat_proj_graph_json|safe }}');
+        Plotly.newPlot('catproj-graph', cat_proj.data, cat_proj.layout);
+
+        var proj_trend = JSON.parse('{{ proj_date_json|safe }}');
+        Plotly.newPlot('projtrend-graph', proj_trend.data, proj_trend.layout);
     </script>
     
 </body>
