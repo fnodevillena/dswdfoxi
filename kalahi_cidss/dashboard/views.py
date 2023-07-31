@@ -10,6 +10,7 @@ import os
 import json
 from django.conf import settings
 
+
 @login_required
 def dashboard(request):
     context = {'active_page': 'dashboard'}
@@ -21,8 +22,6 @@ def access_data(request):
 
     file_path = os.path.join(settings.STATICFILES_DIRS[0], 'data', 'SPI Masterlist as of 2023.07.15 ALL.xlsx')
 
-    
-
     # Read all sheets into a dictionary where the keys are sheet names and values are DataFrames
     sheets_dict = pd.read_excel(file_path, sheet_name=None)
 
@@ -33,6 +32,18 @@ def access_data(request):
     sheet_data["count"] = 1
     projects_count = len(sheet_data)
     fp_count = sheet_data[sheet_data['Final_Physical_Status'] == 'Completed'].shape[0]
+
+    status_mapping = {
+    'Completed': 'Finished',
+    }
+
+    # Creating a new column "Project Status Binary" using the map function
+    sheet_data['Project_Status_Binary'] = sheet_data['Final_Physical_Status'].map(status_mapping).fillna('Unfinished')
+
+    df_status = sheet_data.groupby(['Project_Status_Binary', 'Final_Physical_Status']).size().reset_index(name='count')
+    total_row = {"Project_Status_Binary" : "Total", "Final_Physical_Status": "all", "count" : df_status['count'].sum()}
+    total_row = pd.DataFrame([total_row])
+    df_status = pd.concat([df_status, total_row], ignore_index= True)
 
     # Create a groupby object based on 'main_category' and 'subcategory'
     grouped_df = sheet_data.groupby(['Major_Category', 'Project_Type']).size().reset_index(name='count')
@@ -81,16 +92,15 @@ def access_data(request):
     # Convert the Plotly figure to JSON to pass it to the template
     cr_graph_json = cr.to_json()
 
-    #PROJECTS BY FUND SOURCE
+    #Total and Finished Projects
 
-    fund_source = px.histogram(sheet_data, x="Fund_Source", title="Projects by Fund Source")
+    total_vs_finished = px.bar(df_status[df_status['Project_Status_Binary'] != 'Unfinished'], x="Project_Status_Binary", y = 'count', title="Total and Finished Projects", color = 'Project_Status_Binary')
     # Convert the Plotly figure to JSON to pass it to the template
-    fs_graph_json = json.dumps(fund_source, cls=plotly.utils.PlotlyJSONEncoder)
+    total_vs_finished_graph_json = json.dumps(total_vs_finished, cls=plotly.utils.PlotlyJSONEncoder)
 
-    #PROJECTS BY PROVINCE
+    #UNFINISHED PROJECTS
 
-    province_proj = px.histogram(sheet_data, x="Final_Physical_Status", title="Projects by Province", 
-                                 facet_col =  "Province", color = "Final_Physical_Status", labels={"Province": ""})
+    province_proj = px.bar(df_status[df_status['Project_Status_Binary'] == 'Unfinished'], x="Project_Status_Binary", title="Unfinished Projects", color = "Final_Physical_Status")
     # Convert the Plotly figure to JSON to pass it to the template
     prov_graph_json = json.dumps(province_proj, cls=plotly.utils.PlotlyJSONEncoder)
 
@@ -159,7 +169,25 @@ def access_data(request):
     return render(request, 'dashboard/dashboard.html', {'projects_graph_json': projects_graph_json,
                                                           'fp_graph_json': fp_graph_json, 
                                                           "cr_graph_json" : cr_graph_json, 
-                                                          "fs_graph_json": fs_graph_json, 
+                                                          "total_vs_finished_graph_json": total_vs_finished_graph_json, 
                                                           "prov_graph_json": prov_graph_json,
                                                           "cat_proj_graph_json": cat_proj_graph_json,
                                                           "proj_date_json": proj_date_json})
+
+def update_graphs(request):
+    if request.method == 'POST':
+        # Get the clicked element data from AJAX request
+        category = request.POST.get('category')
+
+        # Filter the DataFrame based on the clicked element
+        filtered_df = df[df['Category'] == category]
+
+        # Create updated graphs
+        scatter_fig = px.scatter(filtered_df, x='Category', y='Value', title='Scatter Plot')
+        bar_fig = px.bar(filtered_df, x='Category', y='Value', title='Bar Chart')
+
+        # Return the updated graphs as a JSON response
+        return JsonResponse({'scatter_fig': scatter_fig.to_json(), 'bar_fig': bar_fig.to_json()})
+
+    # If the request is not a POST request, return an empty response or an error message if needed
+    return JsonResponse({})
