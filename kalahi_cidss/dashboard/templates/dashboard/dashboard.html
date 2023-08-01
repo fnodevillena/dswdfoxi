@@ -8,37 +8,8 @@
 <!-- Include the Plotly library -->
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 <body>
-<div id="projects-graph" ></div>
-<div id="fp-graph"></div>
-<div id="cr-graph"></div>
-<div id="tf-graph"></div>
-<div id="prov-graph"></div>
-<div id="catproj-graph"></div>
-<div id="projtrend-graph"></div>
 
-    <script>
-        var projects = JSON.parse('{{ projects_graph_json|safe }}');
-        Plotly.newPlot('projects-graph', projects.data, projects.layout);
-
-        var finished_projects = JSON.parse('{{ fp_graph_json|safe }}');
-        Plotly.newPlot('fp-graph', finished_projects.data, finished_projects.layout);
-
-        var completion_rate = JSON.parse('{{ cr_graph_json|safe }}');
-        Plotly.newPlot('cr-graph', completion_rate.data, completion_rate.layout);
-
-        var total_vs_finished = JSON.parse('{{ total_vs_finished_graph_json|safe }}');
-        Plotly.newPlot('tf-graph', total_vs_finished.data, total_vs_finished.layout);
-
-        var province_proj = JSON.parse('{{ prov_graph_json|safe }}');
-        Plotly.newPlot('prov-graph', province_proj.data, province_proj.layout);
-
-        var cat_proj = JSON.parse('{{ cat_proj_graph_json|safe }}');
-        Plotly.newPlot('catproj-graph', cat_proj.data, cat_proj.layout);
-
-        var proj_trend = JSON.parse('{{ proj_date_json|safe }}');
-        Plotly.newPlot('projtrend-graph', proj_trend.data, proj_trend.layout);
-        
-    </script>
+    <iframe src="https://realbunny04-jptazwnhpxcdkeyzyttokd.streamlit.app/?embed=true" name="iframe_a" height="800px" width="100%" title="Dashboard "></iframe>
     
 </body>
 {% endblock %}
