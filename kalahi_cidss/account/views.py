@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+from django.http import HttpResponse
 
 def sign_in(request):
     if request.method == 'POST':
@@ -9,8 +10,13 @@ def sign_in(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('/') 
+            response = redirect('/')
+            return response
         else:
             messages.error(request, 'Invalid credentials. Please try again.')
     
-    return render(request, 'account/login.html')
+    return render(request, 'account/login.html', {'redirect_field_name': None})
+
+def sign_out(request):
+    logout(request)
+    return redirect('account:login')

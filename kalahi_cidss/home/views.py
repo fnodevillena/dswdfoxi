@@ -5,4 +5,6 @@ from django.http import HttpResponse
 @login_required
 def home(request):
     context = {'active_page': 'home'}
-    return render(request, "home/home.html", context)
+    response = render(request, "home/home.html", context)
+    response['Content-Type'] = 'text/html; charset=utf-8'
+    return response

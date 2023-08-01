@@ -1,11 +1,12 @@
 <!-- login.html -->
+{% load static %}
 
 <!DOCTYPE html>
-{% load static %}
-<html>
-
+<html lang="en"> 
 <head>
+    <meta charset="UTF-8">
     <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
 </head>
 
@@ -19,19 +20,19 @@
                     </div>
                 </div>
                 <div class="login-form">
-                    {% if messages %}
-                    <ul class="messages">
-                        {% for message in messages %}
-                        <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
-                            {% endfor %}
-                    </ul>
-                    {% endif %}
                     <form method="post" action="{% url 'account:login' %}">
                         {% csrf_token %}
                         <label for="username">Username</label>
                         <input type="text" id="username" name="username" required>
                         <label for="password">Password</label>
                         <input type="password" id="password" name="password" required>
+                        <ul class="messages">
+                            {% if messages %}
+                            {% for message in messages %}
+                            <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                                {% endfor %}
+                            {% endif %}
+                        </ul>
                         <button type="submit">Login</button>
                     </form>
                 </div>
@@ -39,7 +40,8 @@
         </div>
         <div class="overlay"></div>
     </div>
-    <script src="{% static 'javascript/login.js' %}"></script>
 </body>
+
+<script src="{% static 'javascript/login.js' %}"></script>
 
 </html>

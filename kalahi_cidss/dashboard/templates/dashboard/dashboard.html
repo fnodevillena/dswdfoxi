@@ -4,9 +4,11 @@
 
 {% block title %}Kalahi-CIDSS | Home{% endblock %}
 
+<head>
+    <script src="{% static 'javascript/plotly-2.24.1.min.js' %}"></script>
+</head>
 {% block content %}
 <!-- Include the Plotly library -->
-<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 <body>
 <div id="projects-graph" ></div>
 <div id="fp-graph"></div>

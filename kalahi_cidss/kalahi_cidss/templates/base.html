@@ -2,55 +2,87 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
+    <meta charset="UTF-8">
     <title>{% block title %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
+    <script src="{% static 'javascript/base.js' %}"></script>
+    {% block staticfiles %}
+    {% endblock %}
 </head>
-
 <body>
-    <div class="container">
-        <nav>
+    <nav>
+        <div class="navbar-logo">
             <img class="logo" src="{% static 'images/base/dswd_logo.png' %}" alt="KALAHI-CIDSS Logo">
-            <div class="navbar-divider"></div>
-            <div>
-                <ul>
-                    <li {% if active_page == 'home' %}class='active'{% endif %}>
-                        <a href="{% url 'home:home' %}">Home</a>
-                    </li>
-                    <li {% if active_page == 'dashboard' %}class='active'{% endif %}">
-                        <a href="{% url 'dashboard:dashboard' %}">Dashboard</a>
-                    </li>
-                    <li><a href="{% url 'home:home' %}">Tables</a></li>
-                </ul>
-            </div>
-        </nav>
-        <aside>
-            <div class="sidebar-divider"></div>
-            <div>
-                <ul>
-                    <li {% if active_page == 'home' %}class='active'{% endif %}>
-                        <a href="{% url 'home:home' %}">Home</a>
-                    </li>
-                    <li {% if active_page == 'dashboard' %}class='active'{% endif %}">
-                        <a href="{% url 'dashboard:dashboard' %}">Dashboard</a>
-                    </li>
-                    <li><a href="{% url 'home:home' %}">Tables</a></li>
-                </ul>
-            </div>
-        
-        </aside>
-        <div class="overlay"></div>
-
+        </div>
+        <div class="navbar-list">
+            <ul class="navbar">
+                <li>
+                    <a href="{% url 'dashboard:dashboard' %}">
+                        <img class="icon" id="dashboard-icon" src="{% static 'images/base/dashboard.svg' %}"
+                            alt="Dashboard Icon">
+                    </a>
+                </li>
+                <li>
+                    <img class="icon" id="account-icon" src="{% static 'images/base/account.svg' %}" alt="Account Icon">
+                    <ul class="account-menu">
+                        <li>
+                            <img class="account-menu-icon" id="account-icon"
+                                src="{% static 'images/account/account_user.svg' %}" alt="User Icon">
+                            <a href="{% url 'home:home' %}">
+                                Account
+                            </a>
+                        </li>
+                        <li>
+                            <img class="account-menu-icon" id="account-icon"
+                                src="{% static 'images/account/logout.svg' %}" alt="User Icon">
+                            <a href="{% url 'account:logout' %}">
+                                Logout
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <aside>
+        <ul class="sidebar">
+            <li>
+                <a href="{% url 'home:home' %}">
+                    <img class="sidebar-menu-icon" id="sidebar-icon" src="{% static 'images/base/home.svg' %}" alt="Home Icon">
+                    Home
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'dashboard:dashboard' %}">
+                    <img class="sidebar-menu-icon" id="sidebar-icon" src="{% static 'images/base/dashboard.svg' %}" alt="Dashboard Icon">
+                    Dashboard
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'home:home' %}">
+                    <img class="sidebar-menu-icon" id="sidebar-icon" src="{% static 'images/base/account.svg' %}" alt="Account Icon">
+                    Account
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'account:logout' %}">
+                    <img class="sidebar-menu-icon" id="sidebar-icon" src="{% static 'images/base/logout.svg' %}" alt="Logout Icon">
+                    Logout
+                </a>
+            </li>
+        </ul>
+    </aside>
+    <div class="overlay"></div>
+    <main>
         {% block content %}{% endblock %}
-
-        <footer>
-            <div class="footer-separator"></div>
-            <p>&copy; 2023 DSWD FO XI</p>
-        </footer>
-    </div>
+    </main>
+    <footer>
+        <p>&copy; 2023 DSWD FO XI</p>
+    </footer>
 </body>
-<script src="{% static 'javascript/base.js' %}"></script>
 
 </html>

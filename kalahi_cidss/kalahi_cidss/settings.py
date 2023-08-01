@@ -26,6 +26,13 @@ SECRET_KEY = 'django-insecure-4ojf(=%_s%0m(%3o-cqqcy2b@%g6$$rn8s2-nl+8y9&q)k@idq
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+if DEBUG:
+    SECURE_SSL_REDIRECT = False
+else:
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+
 ALLOWED_HOSTS = ['localhost', '192.168.0.27', '127.0.0.1']
 
 
@@ -108,8 +115,8 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 LOGIN_URL = 'account:login'
-LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = '/accounts/login/'
+LOGIN_REDIRECT_URL = 'home:home'
+LOGOUT_REDIRECT_URL = 'account:login'
 
 SESSION_COOKIE_AGE = 1800
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True

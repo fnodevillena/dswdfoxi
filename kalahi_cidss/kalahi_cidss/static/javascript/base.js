@@ -14,6 +14,14 @@ function checkOrientation() {
             : null;
 }
 
+function adjustFont() {
+    document.body.style.fontSize = isMobileDevice()
+    ? (checkOrientation() ? '12px' : '14px')
+    : '16px';
+}
+document.addEventListener("DOMContentLoaded", slideUpNavbarOnScroll);
+
+
 document.addEventListener('DOMContentLoaded', function () {
     document.body.style.fontSize = isMobileDevice() ? '12px' : '16px';
 });
@@ -21,8 +29,6 @@ document.addEventListener('DOMContentLoaded', function () {
 /*
     Navigation Bar
 */
-
-// Mobile Navigation Bar Scrolling
 function slideUpNavbarOnScroll() {
     const navbar = document.querySelector("nav");
     if (isMobileDevice()) {
@@ -32,124 +38,124 @@ function slideUpNavbarOnScroll() {
         });
     }
 }
-document.addEventListener("DOMContentLoaded", slideUpNavbarOnScroll);
 
 function adjustNavbarHeight() {
     const navbar = document.querySelector("nav");
-    const sidebarPadding = document.querySelector("aside .sidebar-divider");
-    const orientation = window.matchMedia('(orientation: portrait)').matches ? 'portrait' : 'landscape';
+    const orientation = checkOrientation();
 
     navbar.style.height = isMobileDevice()
-        ? (orientation === 'portrait' ? '95px' : '60px')
+        ? (orientation ? '25px' : '30px')
         : '50px';
-
-    sidebarPadding.style.marginTop = isMobileDevice()
-        ? (orientation === 'portrait' ? '105px' : '70px')
-        : '60px';
 }
 document.addEventListener("DOMContentLoaded", adjustNavbarHeight);
 window.addEventListener('resize', adjustNavbarHeight);
 
-function adjustNavbarLogo() {
-    const navbarLogo = document.querySelector("nav img .logo");
+function adjustNavbar() {
+    const navbarLogo = document.querySelector("nav img.logo");
+    const navbarIcons = document.querySelectorAll("nav img.icon");
     const sidebar = document.querySelector("aside");
-    const sidebarPadding = document.querySelector("aside .sidebar-divider");
-    const orientation = window.matchMedia('(orientation: portrait)').matches ? 'portrait' : 'landscape';
 
     navbarLogo.style.width = isMobileDevice()
-        ? (orientation === 'portrait' ? '250px' : '200px')
+        ? (checkOrientation() ? '100px' : '125px')
         : '150px';
-
+    navbarIcons.forEach(icon => {
+        icon.style.display = isMobileDevice()
+            ? 'none'
+            : 'block';
+    });
     sidebar.style.width = isMobileDevice()
-        ? (orientation === 'portrait' ? '250px' : '200px')
-        : '150px';
-
-    sidebarPadding.style.width = isMobileDevice()
-        ? (orientation === 'portrait' ? '270px' : '220px')
-        : '170px';
+        ? (checkOrientation() ? '50%' : '25%')
+        : null;
 }
-document.addEventListener("DOMContentLoaded", adjustNavbarLogo);
-window.addEventListener('resize', adjustNavbarLogo);
-
-function toggleNavbarList() {
-    const navbarDivider = document.querySelector("nav .navbar-divider");
-    const navbarList = document.querySelector("nav ul");
-
-    navbarDivider.style.display = isMobileDevice() ? 'none' : 'block';
-    navbarList.style.display = isMobileDevice() ? 'none' : 'block';
-}
-document.addEventListener("DOMContentLoaded", toggleNavbarList);
-window.addEventListener('resize', toggleNavbarList);
+document.addEventListener("DOMContentLoaded", adjustNavbar);
+window.addEventListener('resize', adjustNavbar);
 
 function toggleSidebar() {
     const sidebar = document.querySelector('aside');
     const overlay = document.querySelector('.overlay');
     const isActive = sidebar.classList.toggle('active');
 
-    overlay.style.display = isActive ? 'block' : 'none';
+    overlay.style.display = 'block';
+
+    setTimeout(function () {
+        overlay.style.opacity = isActive ? '1' : '0';
+        if (!isActive) {
+            setTimeout(function () {
+                overlay.style.display = 'none';
+            }, 300);
+        }
+    }, 10);
 
     document.body.style.overflow = isActive ? 'hidden' : 'auto';
 }
 
 function toggleNavbarLogo() {
-    const logo = document.querySelector("nav img");
-    const desktopURL = "https://kalahi.dswd.gov.ph/";
+    const logo = document.querySelector("nav img.logo");
+    const homeURL = "/";
 
     logo.addEventListener("click", function () {
         if (isMobileDevice()) {
             toggleSidebar();
         } else {
-            window.location.href = desktopURL;
+            window.location.href = homeURL;
         }
     });
 }
-
 document.addEventListener("DOMContentLoaded", toggleNavbarLogo);
 
-function toggleAccountMenu() {
-    const accountMenu = document.querySelector('.account-menu');
-    accountMenu.classList.toggle('active');
-}
 
-function hideAccountMenuOnClickOutside(event) {
-    const accountMenu = document.querySelector('.account-menu');
-    if (!accountMenu.contains(event.target) && accountMenu.classList.contains('active')) {
-        accountMenu.classList.remove('active');
-    }
-}
+// Account Menu
+document.addEventListener("DOMContentLoaded", function () {
+    const accountIcon = document.getElementById("account-icon");
+    const accountMenu = document.querySelector("ul.account-menu");
 
-document.addEventListener('DOMContentLoaded', function () {
-    const accountIcon = document.querySelector('.account');
-    accountIcon.addEventListener('click', toggleAccountMenu);
+    accountIcon.addEventListener("click", function (event) {
+        event.stopPropagation();
+        accountMenu.style.display = accountMenu.style.display === "block" ? "none" : "block";
+    });
 
-    // Close account menu when clicked outside
-    document.addEventListener('click', hideAccountMenuOnClickOutside);
+    document.addEventListener("click", function () {
+        accountMenu.style.display = "none";
+    });
 });
 
-function hideSidebar() {
+function adjustSidebar() {
     const sidebar = document.querySelector("aside");
-    const sidebarDivider = document.querySelector("aside .sidebar-divider");
     const sidebarList = document.querySelector("aside ul");
 
     sidebar.style.display = isMobileDevice() ? 'block' : 'none';
-    sidebarDivider.style.display = isMobileDevice() ? 'block' : 'none';
     sidebarList.style.display = isMobileDevice() ? 'block' : 'none';
 }
-document.addEventListener("DOMContentLoaded", hideSidebar);
-window.addEventListener('resize', hideSidebar);
+document.addEventListener("DOMContentLoaded", adjustSidebar);
+window.addEventListener('resize', adjustSidebar);
 
-/* 
-    Home | Hero
-*/
-// Hero Background Parallax
-// Function to handle the parallax effect
+// Hero
 function parallaxEffect() {
     const image = document.querySelector('.hero-image img');
     const scrollPosition = window.scrollY;
 
-    // Adjust the position of the background image based on the scroll position
     image.style.transform = `translateY(-${scrollPosition * 0.15}px)`;
 }
-
-// Attach the 'parallaxEffect' function to the 'scroll' event
 window.addEventListener('scroll', parallaxEffect);
+
+function adjustHero() {
+    const hero = document.querySelector('header.hero')
+    const heroIcon = document.querySelector('header.hero .hero-content .hero-icon img');
+    const heroH1 = document.querySelector('header.hero .hero-content .hero-text h1');
+    const heroH2 = document.querySelector('header.hero .hero-content .hero-text h2');
+
+    hero.style.height = isMobileDevice()
+        ? (checkOrientation() ? '150px' : '300px')
+        : '500px';
+    heroIcon.style.height = isMobileDevice()
+        ? (checkOrientation() ? '75px' : '125px')
+        : '175px';
+    heroH1.style.fontSize = isMobileDevice()
+        ? (checkOrientation() ? '1rem' : '1.75rem')
+        : '3rem';
+    heroH2.style.fontSize = isMobileDevice()
+        ? (checkOrientation() ? '0.75rem' : '1.25rem')
+        : '1.5rem';
+}
+document.addEventListener("DOMContentLoaded", adjustHero);
+window.addEventListener('resize', adjustHero);
