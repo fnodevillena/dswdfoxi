@@ -23,6 +23,12 @@ main {
     margin: 0 auto;
 }
 
+main.dashboard-screen {
+    flex: 1;
+    max-width: 100%;
+    margin: 0;
+}
+
 nav {
     position: sticky;
     top: 0;
